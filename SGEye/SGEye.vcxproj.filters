@@ -18,5 +18,11 @@
     <ClCompile Include="SGEye.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="TheApp.ixx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TheApp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
