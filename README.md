@@ -1,2 +1,2 @@
-# SGEye
+# SGEyes
 Data loss prevention
