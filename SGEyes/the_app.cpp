@@ -1,19 +1,16 @@
-module;
+#include "the_app.hpp"
 
-#include "defines.h"
 #include "fmt/core.h"
-
-module SGEye.TheApp;
 
 SAIGON_NAMESPACE_BEGIN
 
-TheApp& TheApp::getInst()
+the_app& the_app::get_instance()
 {
-	static TheApp app;
+	static the_app app;
 	return app;
 }
 
-void TheApp::start()
+void the_app::start()
 {
 	fmt::print("Hello world!");
 }
