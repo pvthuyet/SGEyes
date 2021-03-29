@@ -2,7 +2,7 @@
 #define SGEYE_THE_APP__
 
 #pragma once
-#include "defines.h"
+#include "define.h"
 
 SAIGON_NAMESPACE_BEGIN
 class the_app

@@ -7,5 +7,6 @@ project(SGEye LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Include sub-projects.
+# Include fmt library
+add_subdirectory (fmt)
 add_subdirectory (SGEyes)

@@ -3,20 +3,12 @@
 #
 cmake_minimum_required (VERSION 3.8 FATAL_ERROR)
 
-# fmtlib
-set(FMTLIB_DIR "../../saigon-library/saigonlib/3rd_party/fmtlib")
-message(STATIC "src: ${FMTLIB_DIR}/src/format.cc")
+add_executable(SGEyes "main.cpp" "the_app.cpp" "the_app.hpp")
 
-# Add include directory
-list(APPEND SAIGON_LIB_INCLUDES 
-	"../../saigon-library/saigonlib/include"
-	"${FMTLIB_DIR}/include"
+target_include_directories(SGEyes PUBLIC 
+	${CMAKE_CURRENT_SOURCE_DIR}
+	${PROJECT_SOURCE_DIR}/fmt/${FMT_INC_DIR}
 	)
-
-
-# Add source to this project's executable.
-add_executable (SGEyes "main.cpp" "the_app.cpp" "the_app.hpp" "${FMTLIB_DIR}/src/format.cc" "${FMTLIB_DIR}/src/os.cc")
-
-target_include_directories(SGEyes PUBLIC ${SAIGON_LIB_INCLUDES})
+target_link_libraries(SGEyes PUBLIC fmt)
 
 # TODO: Add tests and install targets if needed.
