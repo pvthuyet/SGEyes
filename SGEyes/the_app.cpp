@@ -1,5 +1,5 @@
 #include "the_app.hpp"
-
+#include "file_activity/directory_watcher_mgr.hpp"
 #include "fmt/core.h"
 
 SAIGON_NAMESPACE_BEGIN
@@ -46,6 +46,7 @@ std::string say_hello()
 void the_app::start()
 {
 	fmt::print(say_hello());
+	directory_watcher_mgr{}.foo();
 }
 
 SAIGON_NAMESPACE_END

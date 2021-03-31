@@ -3,7 +3,7 @@
 #
 cmake_minimum_required (VERSION 3.8 FATAL_ERROR)
 
-add_executable(SGEyes "main.cpp" "the_app.cpp" "the_app.hpp")
+add_executable(SGEyes "main.cpp" "the_app.cpp" "the_app.hpp" "file_activity/directory_watcher_mgr.cpp")
 
 # Dealing with platform-dependent source code
 if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
@@ -59,7 +59,7 @@ set_target_properties(SGEyes
 		CXX_STANDARD			17
 		CXX_EXTENSIONS			OFF
 		CXX_STANDARD_REQUIRED	ON
-	)
+)
 
 # Set CMAKE_BUILD_TYPE
 if(NOT CMAKE_BUILD_TYPE)
@@ -87,12 +87,20 @@ target_compile_options(SGEyes
     ${CXX_FLAGS}
     "$<$<CONFIG:Debug>:${CXX_FLAGS_DEBUG}>"
     "$<$<CONFIG:Release>:${CXX_FLAGS_RELEASE}>"
-  )
+ )
 
-target_include_directories(SGEyes PRIVATE 
-	${CMAKE_CURRENT_SOURCE_DIR}
-	${PROJECT_SOURCE_DIR}/fmt/${FMT_INC_DIR}
-	)
+target_include_directories(SGEyes 
+	PRIVATE 
+		${PROJECT_SOURCE_DIR}/saigonlib/include
+		${CMAKE_CURRENT_SOURCE_DIR}
+		${PROJECT_SOURCE_DIR}/fmt/${FMT_INC_DIR}
+)
+
+# File activity
+add_subdirectory (file_activity)
+
+# Link library
 target_link_libraries(SGEyes PRIVATE fmt)
+target_link_libraries(SGEyes PRIVATE file_activity)
 
 # TODO: Add tests and install targets if needed.
