@@ -5,6 +5,62 @@ cmake_minimum_required (VERSION 3.8 FATAL_ERROR)
 
 add_executable(SGEyes "main.cpp" "the_app.cpp" "the_app.hpp")
 
+# Dealing with platform-dependent source code
+if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+  target_compile_definitions(SGEyes PUBLIC "IS_LINUX")
+endif()
+if(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
+  target_compile_definitions(SGEyes PUBLIC "IS_MACOS")
+endif()
+if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
+  target_compile_definitions(SGEyes PUBLIC "IS_WINDOWS")
+endif()
+
+# Dealing with compiler-dependent source code
+if(CMAKE_CXX_COMPILER_ID MATCHES Intel)
+    target_compile_definitions(SGEyes PUBLIC "IS_INTEL_CXX_COMPILER")
+endif()
+if(CMAKE_CXX_COMPILER_ID MATCHES GNU)
+    target_compile_definitions(SGEyes PUBLIC "IS_GNU_CXX_COMPILER")
+endif()
+if(CMAKE_CXX_COMPILER_ID MATCHES PGI)
+    target_compile_definitions(SGEyes PUBLIC "IS_PGI_CXX_COMPILER")
+endif()
+if(CMAKE_CXX_COMPILER_ID MATCHES XL)
+    target_compile_definitions(SGEyes PUBLIC "IS_XL_CXX_COMPILER")
+endif()
+
+# Discovering the host processor architecture
+if(CMAKE_SIZEOF_VOID_P EQUAL 8)
+  target_compile_definitions(SGEyes PUBLIC "IS_64_BIT_ARCH")
+  message(STATUS "Target is 64 bits")
+else()
+  target_compile_definitions(SGEyes PUBLIC "IS_32_BIT_ARCH")
+  message(STATUS "Target is 32 bits")
+endif()
+
+if(CMAKE_HOST_SYSTEM_PROCESSOR MATCHES "i386")
+  message(STATUS "i386 architecture detected")
+elseif(CMAKE_HOST_SYSTEM_PROCESSOR MATCHES "i686")
+  message(STATUS "i686 architecture detected")
+elseif(CMAKE_HOST_SYSTEM_PROCESSOR MATCHES "x86_64")
+  message(STATUS "x86_64 architecture detected")
+else()
+  message(STATUS "host processor architecture is unknown")
+endif()
+
+target_compile_definitions(SGEyes
+  PUBLIC "ARCHITECTURE=${CMAKE_HOST_SYSTEM_PROCESSOR}"
+  )
+
+# Setting the standard for the language
+set_target_properties(SGEyes
+	PROPERTIES
+		CXX_STANDARD			17
+		CXX_EXTENSIONS			OFF
+		CXX_STANDARD_REQUIRED	ON
+	)
+
 # Set CMAKE_BUILD_TYPE
 if(NOT CMAKE_BUILD_TYPE)
 	set(CMAKE_BUILD_TYPE Release CACHE STRING "Build type" FORCE)

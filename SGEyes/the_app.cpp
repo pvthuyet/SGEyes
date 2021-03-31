@@ -10,9 +10,42 @@ the_app& the_app::get_instance()
 	return app;
 }
 
+std::string say_hello() 
+{
+	std::string msg;
+#ifdef IS_WINDOWS
+	msg = std::string("Hello from Windows!");
+#elif IS_LINUX
+	msg = std::string("Hello from Linux!");
+#elif IS_MACOS
+	msg = std::string("Hello from macOS!");
+#else
+	msg = std::string("Hello from an unknown system!");
+#endif
+
+	msg += " - ";
+#ifdef IS_INTEL_CXX_COMPILER
+	// only compiled when Intel compiler is selected
+	// such compiler will not compile the other branches
+	msg += std::string("Hello Intel compiler!");
+#elif IS_GNU_CXX_COMPILER
+	// only compiled when GNU compiler is selected
+	// such compiler will not compile the other branches
+	msg += std::string("Hello GNU compiler!");
+#elif IS_PGI_CXX_COMPILER
+	// etc.
+	msg += std::string("Hello PGI compiler!");
+#elif IS_XL_CXX_COMPILER
+	msg += std::string("Hello XL compiler!");
+#else
+	msg += std::string("Hello unknown compiler - have we met before?");
+#endif
+	return msg;
+}
+
 void the_app::start()
 {
-	fmt::print("Hello world!");
+	fmt::print(say_hello());
 }
 
 SAIGON_NAMESPACE_END

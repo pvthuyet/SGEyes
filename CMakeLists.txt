@@ -7,6 +7,19 @@ project(SGEye LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+# Discovering the operating system
+if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+  message(STATUS "Configuring on/for Linux")
+elseif(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
+  message(STATUS "Configuring on/for macOS")
+elseif(CMAKE_SYSTEM_NAME STREQUAL "Windows")
+  message(STATUS "Configuring on/for Windows")
+elseif(CMAKE_SYSTEM_NAME STREQUAL "AIX")
+  message(STATUS "Configuring on/for IBM AIX")
+else()
+  message(STATUS "Configuring on/for ${CMAKE_SYSTEM_NAME}")
+endif()
+
 # Print out information
 message(STATUS "Build type: ${CMAKE_BUILD_TYPE}")
 message(STATUS "C++ compiler flags: ${CMAKE_CXX_FLAGS}")
