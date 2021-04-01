@@ -1,24 +1,24 @@
-#ifndef SPDLOG_HEADER_H_
-#define SPDLOG_HEADER_H_
-#pragma once
-
-#include "define.h"
-#define SPDLOG_ACTIVE_LEVEL SPDLOG_LEVEL_TRACE
-#define SPDLOG_DEBUG_ON
-#define SPDLOG_TRACE_ON
-#define SPDLOG_WCHAR_TO_UTF8_SUPPORT
-#include "spdlog/spdlog.h"
-#include "spdlog/async.h"
+#include "logger.hpp"
+#include "logger_define.hpp"
 #include "spdlog/sinks/rotating_file_sink.h"
 #include "spdlog/sinks/stdout_color_sinks.h"
+#include "spdlog/async.h"
 #include <memory>
-
-#define LOGENTER	SPDLOG_INFO("Enter {")
-#define LOGEXIT		SPDLOG_INFO("Exit }")
 
 SAIGON_NAMESPACE_BEGIN
 
-static void initialze()
+logger& logger::get_instance()
+{
+	static logger log{};
+	return log;
+}
+
+logger::logger()
+{
+	initialze();
+}
+
+void logger::initialze()
 {
 	spdlog::init_thread_pool(8192, 1);
 	auto stdout_sink = std::make_shared<spdlog::sinks::stdout_color_sink_mt >();
@@ -34,7 +34,4 @@ static void initialze()
 	spdlog::flush_every(std::chrono::seconds(1));
 #endif // _DEBUG
 }
-
 SAIGON_NAMESPACE_END
-
-#endif // !SPDLOG_HEADER_H_

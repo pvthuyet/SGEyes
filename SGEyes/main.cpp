@@ -1,15 +1,16 @@
 // SGEye.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
-#include "the_app.hpp"
-#include "spdlog_header.h"
 #include "vld.h"
+#include "the_app.hpp"
+#include "logger.hpp"
 
 int main()
 {
     namespace sg = saigon;
     // Initialize logger
-    sg::initialze();
+    sg::logger::get_instance();
+
     int* x = new int(1);
 
     // start app

@@ -1,5 +1,4 @@
 #include "task_timer.hpp"
-#include "fmt/format.h"
 #include <mutex>
 #include <condition_variable>
 
@@ -25,7 +24,6 @@ void task_timer::start(int interval) noexcept
 	
 			// 3. Check requested stop again
 			if (stoken.stop_requested()) {
-				fmt::print("requested stop thread\n");
 				break;
 			}
 		}
@@ -36,7 +34,10 @@ void task_timer::start(int interval) noexcept
 
 void task_timer::stop() noexcept
 {
-	mWorker.request_stop();
+	if (mWorker.joinable()) {
+		mWorker.request_stop();
+		mWorker.join();
+	}
 }
 
 SAIGON_NAMESPACE_END

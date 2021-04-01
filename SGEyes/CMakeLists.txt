@@ -3,7 +3,14 @@
 #
 cmake_minimum_required (VERSION 3.8 FATAL_ERROR)
 
-add_executable(SGEyes "main.cpp" "the_app.cpp" "the_app.hpp" "file_activity/directory_watcher_mgr.cpp")
+add_executable(SGEyes 
+	"main.cpp" 
+	"the_app.cpp" 
+	"the_app.hpp" 
+	"file_activity/directory_watcher_mgr.cpp"
+	"logger/logger.hpp"
+	"logger/logger.cpp"
+	)
 
 #set_property(TARGET SGEyes PROPERTY CXX_STANDARD 20)
 
@@ -68,6 +75,10 @@ if(NOT CMAKE_BUILD_TYPE)
 	set(CMAKE_BUILD_TYPE Release CACHE STRING "Build type" FORCE)
 endif()
 
+if(CMAKE_BUILD_TYPE MATCHES Debug)
+	target_compile_definitions(SGEyes PUBLIC "IS_DEBUG")
+endif()
+
 set(COMPILER_FLAGS)
 set(COMPILER_FLAGS_DEBUG)
 set(COMPILER_FLAGS_RELEASE)
@@ -109,17 +120,19 @@ target_compile_options(SGEyes
  )
 
 # spdlog
-set(SG_SPDLOG_INC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/spdlog/include)
+set(SG_SPDLOG_INC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/logger/spdlog/include)
+set(SG_LOGGER_INC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/logger)
 
 target_include_directories(SGEyes 
 	PRIVATE 
 		${SG_SPDLOG_INC_DIR}
+		${SG_LOGGER_INC_DIR}
 		${SG_SAIGONLIB_INC_DIR}
 		${CMAKE_CURRENT_SOURCE_DIR}
 )
 
 # File activity
-add_subdirectory (spdlog)
+add_subdirectory (logger/spdlog)
 add_subdirectory (file_activity)
 
 # Link library

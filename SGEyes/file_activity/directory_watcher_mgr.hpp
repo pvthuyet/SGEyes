@@ -1,5 +1,5 @@
 #pragma once
-#include "define.h"
+#include "define.hpp"
 #include "task_timer.hpp"
 
 SAIGON_NAMESPACE_BEGIN
