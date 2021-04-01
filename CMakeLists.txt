@@ -31,3 +31,5 @@ message(STATUS "C++ flags, minimal Release configuration: ${CMAKE_CXX_FLAGS_MINS
 # Include fmt library
 add_subdirectory (saigonlib)
 add_subdirectory (SGEyes)
+
+install(TARGETS SGEyes DESTINATION bin)
