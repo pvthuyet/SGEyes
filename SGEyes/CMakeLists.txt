@@ -38,6 +38,9 @@ endif()
 if(CMAKE_CXX_COMPILER_ID MATCHES XL)
     target_compile_definitions(SGEyes PUBLIC "IS_XL_CXX_COMPILER")
 endif()
+if(CMAKE_CXX_COMPILER_ID MATCHES MSVC)
+	target_compile_definitions(SGEyes PUBLIC "IS_MSVC_CXX_COMPILER")
+endif()
 
 # Discovering the host processor architecture
 if(CMAKE_SIZEOF_VOID_P EQUAL 8)
@@ -98,7 +101,7 @@ if(CMAKE_CXX_COMPILER_ID MATCHES Clang)
 endif()
 
 # Visual leak detector => work only MSVC
-if(CMAKE_CXX_COMPILER_ID MATCHES MSVC AND CMAKE_BUILD_TYPE MATCHES Debug)  
+if(CMAKE_BUILD_TYPE MATCHES Debug)  
 	message(STATUS "Enabling Visual Leak Detector")
 	if(CMAKE_SIZEOF_VOID_P EQUAL 8)
 		find_library(VLD vld HINTS "D:/Program Files (x86)/Visual Leak Detector/lib/Win64")
