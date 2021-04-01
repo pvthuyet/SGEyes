@@ -21,7 +21,7 @@ public:
 	void stop() noexcept;
 
 private:
-	virtual status onTimer() = 0;
+	virtual status on_timer() = 0;
 
 private:
 	std::jthread mWorker;

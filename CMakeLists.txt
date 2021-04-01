@@ -28,11 +28,6 @@ message(STATUS "C++ flags, Release configuration: ${CMAKE_CXX_FLAGS_RELEASE}")
 message(STATUS "C++ flags, Release configuration with Debug info: ${CMAKE_CXX_FLAGS_RELWITHDEBINFO}")
 message(STATUS "C++ flags, minimal Release configuration: ${CMAKE_CXX_FLAGS_MINSIZEREL}")
 
-# Varibales
-set(SG_FMT_INC_DIR ${CMAKE_SOURCE_DIR}/fmt/include)
-set(SG_SAIGONLIB_INC_DIR ${CMAKE_SOURCE_DIR}/saigonlib/include)
-
 # Include fmt library
-add_subdirectory (fmt)
 add_subdirectory (saigonlib)
 add_subdirectory (SGEyes)

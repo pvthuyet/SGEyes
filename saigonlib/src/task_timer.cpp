@@ -12,7 +12,7 @@ void task_timer::start(int interval) noexcept
 		std::unique_lock lock(mutex);
 		while (true) {
 			// 1. Do the task
-			if (status::FINISH == this->onTimer()) {
+			if (status::FINISH == this->on_timer()) {
 				break;
 			}
 	

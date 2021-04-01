@@ -49,6 +49,7 @@ void the_app::start()
 	//fmt::print(say_hello());
 	directory_watcher_mgr mgr{};
 	mgr.start(1000);
+	std::this_thread::sleep_for(std::chrono::seconds(5));
 }
 
 SAIGON_NAMESPACE_END

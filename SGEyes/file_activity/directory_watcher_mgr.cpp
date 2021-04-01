@@ -4,10 +4,10 @@
 
 SAIGON_NAMESPACE_BEGIN
 
-task_timer::status directory_watcher_mgr::onTimer()
+task_timer::status directory_watcher_mgr::on_timer()
 {
 	static int v = 0;
-	std::cout << "v: " << v++ << std::endl;
+	fmt::print("v: {}", v++);
 	return task_timer::status::CONTINUE;
 }
 
