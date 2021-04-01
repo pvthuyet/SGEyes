@@ -80,10 +80,18 @@ if(CMAKE_CXX_COMPILER_ID MATCHES GNU)
 endif()
 
 if(CMAKE_CXX_COMPILER_ID MATCHES Clang)  
-  list(APPEND CXX_FLAGS "-fno-rtti" "-fno-exceptions" "-Qunused-arguments" "-fcolor-diagnostics")
+  #list(APPEND CXX_FLAGS "-fno-rtti" "-fno-exceptions" "-Qunused-arguments" "-fcolor-diagnostics")
+  list(APPEND CXX_FLAGS "-Wall" "-pendantic")
   list(APPEND CXX_FLAGS_DEBUG "-Wdocumentation")
   list(APPEND CXX_FLAGS_RELEASE "-O3" "-Wno-unused")
 endif()
+
+# Visual leak detector => work only MSVC
+message(STATUS "Enabling Visual Leak Detector")
+find_library(VLD vld HINTS "D:/Program Files (x86)/Visual Leak Detector/lib/Win64")
+find_path(VLD_H vld.h HINTS "D:/Program Files (x86)/Visual Leak Detector/include")
+message(STATUS "VLD: ${VLD}")
+message(STATUS "VLD_H: ${VLD_H}")
 
 target_compile_options(SGEyes
   PRIVATE
@@ -97,6 +105,7 @@ set(SG_SPDLOG_INC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/spdlog/include)
 
 target_include_directories(SGEyes 
 	PRIVATE 
+		${VLD_H}
 		${SG_SPDLOG_INC_DIR}
 		${SG_SAIGONLIB_INC_DIR}
 		${CMAKE_CURRENT_SOURCE_DIR}
@@ -107,6 +116,7 @@ add_subdirectory (spdlog)
 add_subdirectory (file_activity)
 
 # Link library
+target_link_libraries(SGEyes PRIVATE ${VLD})
 target_link_libraries(SGEyes PRIVATE spdlog)
 target_link_libraries(SGEyes PRIVATE saigonlib)
 target_link_libraries(SGEyes PRIVATE file_activity)
