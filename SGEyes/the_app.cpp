@@ -1,5 +1,6 @@
 #include "the_app.hpp"
 #include "file_activity/directory_watcher_mgr.hpp"
+#include "task_timer.hpp"
 #include "fmt/core.h"
 
 SAIGON_NAMESPACE_BEGIN
@@ -47,6 +48,9 @@ void the_app::start()
 {
 	fmt::print(say_hello());
 	directory_watcher_mgr{}.foo();
+	TaskTimer tm{};
+	tm.start(100);
+	std::this_thread::sleep_for(std::chrono::milliseconds(3000));
 }
 
 SAIGON_NAMESPACE_END
