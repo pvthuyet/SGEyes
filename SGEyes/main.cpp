@@ -12,4 +12,5 @@ int main()
 
     // start app
     sg::the_app::get_instance().start();
+    return 0;
 }
