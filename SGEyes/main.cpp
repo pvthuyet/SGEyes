@@ -2,13 +2,13 @@
 //
 
 #include "the_app.hpp"
-//#include "spdlog_header.h"
+#include "spdlog_header.h"
 
 int main()
 {
     namespace sg = saigon;
     // Initialize logger
-    //sg::initialze();
+    sg::initialze();
 
     // start app
     sg::the_app::get_instance().start();

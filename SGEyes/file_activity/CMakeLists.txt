@@ -8,7 +8,7 @@ add_library(file_activity
 
 target_include_directories(file_activity 
 	PRIVATE 
-		${SG_FMT_INC_DIR}
+		${SG_SPDLOG_INC_DIR}
 		${SG_SAIGONLIB_INC_DIR}
 		${CMAKE_CURRENT_SOURCE_DIR}
 )

@@ -25,6 +25,7 @@ void task_timer::start(int interval) noexcept
 	
 			// 3. Check requested stop again
 			if (stoken.stop_requested()) {
+				fmt::print("requested stop thread\n");
 				break;
 			}
 		}

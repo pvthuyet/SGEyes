@@ -73,7 +73,7 @@ set(COMPILER_FLAGS_DEBUG)
 set(COMPILER_FLAGS_RELEASE)
 
 if(CMAKE_CXX_COMPILER_ID MATCHES GNU)
-  list(APPEND CXX_FLAGS "-fno-rtti" "-fno-exceptions" "-Wall" "-O0")
+  #list(APPEND CXX_FLAGS "-fno-rtti" "-fno-exceptions" "-Wall" "-O0")
   list(APPEND CXX_FLAGS_DEBUG "-Wsuggest-final-types" "-Wsuggest-final-methods" "-Wsuggest-override")
   list(APPEND CXX_FLAGS_RELEASE "-O3" "-Wno-unused")
 endif()
@@ -91,17 +91,22 @@ target_compile_options(SGEyes
     "$<$<CONFIG:Release>:${CXX_FLAGS_RELEASE}>"
  )
 
+# spdlog
+set(SG_SPDLOG_INC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/spdlog/include)
+
 target_include_directories(SGEyes 
 	PRIVATE 
-		${SG_FMT_INC_DIR}
+		${SG_SPDLOG_INC_DIR}
 		${SG_SAIGONLIB_INC_DIR}
 		${CMAKE_CURRENT_SOURCE_DIR}
 )
 
 # File activity
+add_subdirectory (spdlog)
 add_subdirectory (file_activity)
 
 # Link library
+target_link_libraries(SGEyes PRIVATE spdlog)
 target_link_libraries(SGEyes PRIVATE saigonlib)
 target_link_libraries(SGEyes PRIVATE file_activity)
 

@@ -1,3 +1,5 @@
+#ifndef SPDLOG_HEADER_H_
+#define SPDLOG_HEADER_H_
 #pragma once
 
 #include "define.h"
@@ -6,15 +8,13 @@
 #define SPDLOG_TRACE_ON
 #define SPDLOG_WCHAR_TO_UTF8_SUPPORT
 #include "spdlog/spdlog.h"
-#include "spdlog/sinks/rotating_file_sink.h"
 #include "spdlog/async.h"
+#include "spdlog/sinks/rotating_file_sink.h"
+#include "spdlog/sinks/stdout_color_sinks.h"
+#include <memory>
 
 #define LOGENTER	SPDLOG_INFO("Enter {")
 #define LOGEXIT		SPDLOG_INFO("Exit }")
-
-#include <memory>
-#include "spdlog/sinks/rotating_file_sink.h"
-#include "spdlog/sinks/stdout_color_sinks.h"
 
 SAIGON_NAMESPACE_BEGIN
 
@@ -36,3 +36,5 @@ static void initialze()
 }
 
 SAIGON_NAMESPACE_END
+
+#endif // !SPDLOG_HEADER_H_

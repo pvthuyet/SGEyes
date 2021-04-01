@@ -1,7 +1,6 @@
 #include "the_app.hpp"
 #include "file_activity/directory_watcher_mgr.hpp"
 #include "task_timer.hpp"
-#include "fmt/core.h"
 
 SAIGON_NAMESPACE_BEGIN
 

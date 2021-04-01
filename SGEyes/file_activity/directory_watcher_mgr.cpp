@@ -1,13 +1,12 @@
 #include "directory_watcher_mgr.hpp"
-#include "fmt/format.h"
-#include <iostream>
+#include "spdlog_header.h"
 
 SAIGON_NAMESPACE_BEGIN
 
 task_timer::status directory_watcher_mgr::on_timer()
 {
-	static int v = 0;
-	fmt::print("v: {}", v++);
+	LOGENTER;
+	LOGEXIT;
 	return task_timer::status::CONTINUE;
 }
 
