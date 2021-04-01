@@ -4,25 +4,24 @@
 #include <thread>
 
 SAIGON_NAMESPACE_BEGIN
-enum class TimerStatus
-{
-	TIMER_CONTINUE,
-	TIMER_FINISH
-};
 
-class TaskTimer
+class task_timer
 {
 public:
-	virtual ~TaskTimer() noexcept {};
+	enum class status
+	{
+		CONTINUE,
+		FINISH
+	};
+
+public:
+	virtual ~task_timer() noexcept {};
 
 	void start(int interval) noexcept;
 	void stop() noexcept;
 
 private:
-	//virtual TimerStatus onTimer() = 0;
-
-public:
-	void execute(std::stop_token stoken);
+	virtual status onTimer() = 0;
 
 private:
 	std::jthread mWorker;

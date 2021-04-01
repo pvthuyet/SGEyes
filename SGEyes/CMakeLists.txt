@@ -5,7 +5,7 @@ cmake_minimum_required (VERSION 3.8 FATAL_ERROR)
 
 add_executable(SGEyes "main.cpp" "the_app.cpp" "the_app.hpp" "file_activity/directory_watcher_mgr.cpp")
 
-set_property(TARGET SGEyes PROPERTY CXX_STANDARD 20)
+#set_property(TARGET SGEyes PROPERTY CXX_STANDARD 20)
 
 # Dealing with platform-dependent source code
 if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
@@ -58,7 +58,7 @@ target_compile_definitions(SGEyes
 # Setting the standard for the language
 set_target_properties(SGEyes
 	PROPERTIES
-		CXX_STANDARD			17
+		CXX_STANDARD			20
 		CXX_EXTENSIONS			OFF
 		CXX_STANDARD_REQUIRED	ON
 )

@@ -46,11 +46,9 @@ std::string say_hello()
 
 void the_app::start()
 {
-	fmt::print(say_hello());
-	directory_watcher_mgr{}.foo();
-	TaskTimer tm{};
-	tm.start(100);
-	std::this_thread::sleep_for(std::chrono::milliseconds(3000));
+	//fmt::print(say_hello());
+	directory_watcher_mgr mgr{};
+	mgr.start(1000);
 }
 
 SAIGON_NAMESPACE_END
