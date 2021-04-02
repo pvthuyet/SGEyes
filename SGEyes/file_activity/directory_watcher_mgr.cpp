@@ -13,16 +13,13 @@ directory_watcher_mgr::~directory_watcher_mgr()
 	LOGEXIT;
 }
 
-bool directory_watcher_mgr::start(unsigned long notifyChange, bool subtree, unsigned long interval)
+void directory_watcher_mgr::start(unsigned long notifyChange, bool subtree, unsigned long interval)
 {
 	LOGENTER;
-	if (mImpl) {
-		// Already run
-		return true;
+	if (!mImpl) {
+		mImpl = new directory_watcher_mgr_impl();
+		mImpl->start(notifyChange, subtree, interval);
 	}
-
-	mImpl = new directory_watcher_mgr_impl();
-	mImpl->start(notifyChange, subtree, interval);
 	LOGEXIT;
 }
 

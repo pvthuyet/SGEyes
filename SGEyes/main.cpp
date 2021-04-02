@@ -7,7 +7,7 @@
 #include "logger_define.hpp"
 #include <exception>
 
-int main(int argc, wchar_t* argv[])
+int wmain(int argc, wchar_t* argv[])
 {
     namespace sg = saigon;
     try {

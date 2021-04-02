@@ -54,7 +54,7 @@ void the_app::start()
 		| FILE_NOTIFY_CHANGE_DIR_NAME
 		| FILE_NOTIFY_CHANGE_ATTRIBUTES
 		| FILE_NOTIFY_CHANGE_SECURITY);
-	std::this_thread::sleep_for(std::chrono::seconds(20));
+	std::this_thread::sleep_for(std::chrono::seconds(10));
 }
 
 SAIGON_NAMESPACE_END

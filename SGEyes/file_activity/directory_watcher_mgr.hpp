@@ -8,7 +8,7 @@ class directory_watcher_mgr
 {
 public:
 	~directory_watcher_mgr();
-	bool start(unsigned long notifyChange, bool subtree = true, unsigned long interval = 300ul);
+	void start(unsigned long notifyChange, bool subtree = true, unsigned long interval = 300ul);
 
 private:
 	directory_watcher_mgr_impl* mImpl{nullptr};

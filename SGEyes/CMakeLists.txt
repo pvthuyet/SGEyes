@@ -123,7 +123,7 @@ target_compile_options(SGEyes
  )
 
 # spdlog
-set(SG_SPDLOG_INC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/logger/spdlog/include)
+set(SG_SPDLOG_INC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/logger/spdlog_1_8_5/include)
 set(SG_LOGGER_INC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/logger)
 
 target_include_directories(SGEyes 
@@ -135,11 +135,9 @@ target_include_directories(SGEyes
 )
 
 # File activity
-#add_subdirectory (logger/spdlog)
 add_subdirectory (file_activity)
 
 # Link library
-#target_link_libraries(SGEyes PRIVATE spdlog)
 target_link_libraries(SGEyes PRIVATE saigonlib)
 target_link_libraries(SGEyes PRIVATE file_activity)
 

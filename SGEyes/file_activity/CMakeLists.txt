@@ -39,6 +39,7 @@ add_library(file_activity STATIC
 )
 
 target_include_directories(file_activity PRIVATE 
+	${SG_BOOST_INC_DIR}
 	${SG_GSL_INC_DIR}
 	${SG_SPDLOG_INC_DIR}
 	${SG_LOGGER_INC_DIR}
