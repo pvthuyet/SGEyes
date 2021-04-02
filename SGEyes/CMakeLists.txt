@@ -135,11 +135,11 @@ target_include_directories(SGEyes
 )
 
 # File activity
-add_subdirectory (logger/spdlog)
+#add_subdirectory (logger/spdlog)
 add_subdirectory (file_activity)
 
 # Link library
-target_link_libraries(SGEyes PRIVATE spdlog)
+#target_link_libraries(SGEyes PRIVATE spdlog)
 target_link_libraries(SGEyes PRIVATE saigonlib)
 target_link_libraries(SGEyes PRIVATE file_activity)
 

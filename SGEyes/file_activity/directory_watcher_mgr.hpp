@@ -1,13 +1,18 @@
 #pragma once
 #include "define.hpp"
-#include "task_timer.hpp"
 
 SAIGON_NAMESPACE_BEGIN
 
-class directory_watcher_mgr : public task_timer
+class directory_watcher_mgr_impl;
+class directory_watcher_mgr
 {
+public:
+	~directory_watcher_mgr();
+	bool start(unsigned long notifyChange, bool subtree = true, unsigned long interval = 300ul);
+	void stop();
+
 private:
-	task_timer::status on_timer() override;
+	directory_watcher_mgr_impl* mWatcher{nullptr};
 };
 
 SAIGON_NAMESPACE_END
