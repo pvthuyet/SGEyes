@@ -20,11 +20,12 @@ class directory_watcher_mgr_impl : public task_timer
 	};
 	
 public:
-	explicit directory_watcher_mgr_impl();
-	bool start(unsigned long notifyChange, bool subtree = true, unsigned long interval = 300ul);
-	void stop();
+	directory_watcher_mgr_impl();
+	~directory_watcher_mgr_impl() noexcept override;
+	void start(unsigned long notifyChange, bool subtree = true, unsigned long interval = 300ul);
 
 private:
+	void stop() noexcept;
 	task_timer::status on_timer() final;
 	void erase_all(watching_group& group, std::wstring const& key);
 	void erase_rename(watching_group& group, rename_notify_info const& info);

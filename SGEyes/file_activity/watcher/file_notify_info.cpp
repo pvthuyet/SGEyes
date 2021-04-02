@@ -1,4 +1,5 @@
 #include "file_notify_info.hpp"
+#include "logger_define.hpp"
 
 SAIGON_NAMESPACE_BEGIN
 bool operator==(file_notify_info const& lhs, file_notify_info const& rhs)

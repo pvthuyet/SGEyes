@@ -20,7 +20,12 @@ directory_watcher_mgr_impl::directory_watcher_mgr_impl() :
 	mRule->addUserDefinePath(L"C:\\Program Files\\");
 }
 
-bool directory_watcher_mgr_impl::start(unsigned long notifyChange, bool subtree, unsigned long interval)
+directory_watcher_mgr_impl::~directory_watcher_mgr_impl() noexcept
+{
+	stop();
+}
+
+void directory_watcher_mgr_impl::start(unsigned long notifyChange, bool subtree, unsigned long interval)
 {
 	unsigned long actionFileName = notifyChange & (notifyChange ^ (FILE_NOTIFY_CHANGE_DIR_NAME | FILE_NOTIFY_CHANGE_ATTRIBUTES | FILE_NOTIFY_CHANGE_SECURITY));
 	unsigned long actionAttr = FILE_NOTIFY_CHANGE_ATTRIBUTES & notifyChange;
@@ -70,10 +75,9 @@ bool directory_watcher_mgr_impl::start(unsigned long notifyChange, bool subtree,
 
 	// start timer thread
 	task_timer::start(interval);
-	return true;
 }
 
-void directory_watcher_mgr_impl::stop()
+void directory_watcher_mgr_impl::stop() noexcept
 {
 	task_timer::stop();
 	for (auto& el : mWatchers) {

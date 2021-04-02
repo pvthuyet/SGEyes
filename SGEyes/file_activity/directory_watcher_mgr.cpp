@@ -6,36 +6,24 @@ SAIGON_NAMESPACE_BEGIN
 
 directory_watcher_mgr::~directory_watcher_mgr()
 {
-	stop();
+	LOGENTER;
+	if (mImpl) {
+		delete mImpl;
+	}
+	LOGEXIT;
 }
 
 bool directory_watcher_mgr::start(unsigned long notifyChange, bool subtree, unsigned long interval)
 {
 	LOGENTER;
-	if (mWatcher) {
+	if (mImpl) {
 		// Already run
 		return true;
 	}
-	mWatcher = new directory_watcher_mgr_impl();
-	return mWatcher->start(
-		FILE_NOTIFY_CHANGE_FILE_NAME
-		| FILE_NOTIFY_CHANGE_LAST_WRITE
-		| FILE_NOTIFY_CHANGE_DIR_NAME
-		| FILE_NOTIFY_CHANGE_ATTRIBUTES
-		| FILE_NOTIFY_CHANGE_SECURITY,
-		subtree,
-		interval
-	);
-	LOGEXIT;
-}
 
-void directory_watcher_mgr::stop()
-{
-	if (mWatcher) {
-		mWatcher->stop();
-		delete mWatcher;
-		mWatcher = nullptr;
-	}
+	mImpl = new directory_watcher_mgr_impl();
+	mImpl->start(notifyChange, subtree, interval);
+	LOGEXIT;
 }
 
 SAIGON_NAMESPACE_END

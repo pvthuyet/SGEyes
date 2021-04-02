@@ -4,16 +4,24 @@
 #include <vld.h>
 #include "the_app.hpp"
 #include "logger.hpp"
+#include "logger_define.hpp"
+#include <exception>
 
-int main()
+int main(int argc, wchar_t* argv[])
 {
     namespace sg = saigon;
-    // Initialize logger
-    sg::logger::get_instance();
+    try {
+        // Initialize logger
+        sg::logger::get_instance();
 
-    int* x = new int(1);
+        int* x = new int(1);
 
-    // start app
-    sg::the_app::get_instance().start();
-    return 0;
+        // start app
+        sg::the_app::get_instance().start();
+    }
+    catch (std::exception const& ex) {
+        SPDLOG_ERROR(ex.what());
+        return EXIT_FAILURE;
+    }
+    return EXIT_SUCCESS;
 }

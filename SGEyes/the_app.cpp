@@ -2,6 +2,7 @@
 #include "file_activity/directory_watcher_mgr.hpp"
 #include <string>
 #include <thread>
+#include <Windows.h>
 
 SAIGON_NAMESPACE_BEGIN
 
@@ -48,8 +49,12 @@ void the_app::start()
 {
 	//fmt::print(say_hello());
 	directory_watcher_mgr mgr{};
-	mgr.start(1000);
-	std::this_thread::sleep_for(std::chrono::seconds(5));
+	mgr.start(FILE_NOTIFY_CHANGE_FILE_NAME
+		| FILE_NOTIFY_CHANGE_LAST_WRITE
+		| FILE_NOTIFY_CHANGE_DIR_NAME
+		| FILE_NOTIFY_CHANGE_ATTRIBUTES
+		| FILE_NOTIFY_CHANGE_SECURITY);
+	std::this_thread::sleep_for(std::chrono::seconds(20));
 }
 
 SAIGON_NAMESPACE_END

@@ -121,7 +121,13 @@ void request_impl::process_notification()
 				wsFileName = wbuf;
 			}
 		}
-		get_observer()->get_watcher()->notify(file_notify_info{ wsFileName, fni.Action });
+
+		try {
+			get_observer()->get_watcher()->notify(file_notify_info{ wsFileName, fni.Action });
+		}
+		catch (std::exception const& ex) {
+			SPDLOG_ERROR(ex.what());
+		}
 
 		if (!fni.NextEntryOffset) {
 			break;
