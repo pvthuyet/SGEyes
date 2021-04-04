@@ -33,18 +33,24 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
 endif()
 
 # Dealing with compiler-dependent source code
+message("CMAKE_CXX_COMPILER_ID: ${CMAKE_CXX_COMPILER_ID}")
+
 if(CMAKE_CXX_COMPILER_ID MATCHES Intel)
     target_compile_definitions(SGEyes PUBLIC "IS_INTEL_CXX_COMPILER")
 endif()
+
 if(CMAKE_CXX_COMPILER_ID MATCHES GNU)
     target_compile_definitions(SGEyes PUBLIC "IS_GNU_CXX_COMPILER")
 endif()
+
 if(CMAKE_CXX_COMPILER_ID MATCHES PGI)
     target_compile_definitions(SGEyes PUBLIC "IS_PGI_CXX_COMPILER")
 endif()
+
 if(CMAKE_CXX_COMPILER_ID MATCHES XL)
     target_compile_definitions(SGEyes PUBLIC "IS_XL_CXX_COMPILER")
 endif()
+
 if(CMAKE_CXX_COMPILER_ID MATCHES MSVC)
 	target_compile_definitions(SGEyes PUBLIC "IS_MSVC_CXX_COMPILER")
 endif()

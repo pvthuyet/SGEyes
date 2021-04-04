@@ -54,3 +54,6 @@ target_include_directories(file_activity PRIVATE
 	${CMAKE_CURRENT_SOURCE_DIR}
 )
 
+if(CMAKE_CXX_COMPILER_ID MATCHES MSVC)
+	target_compile_definitions(file_activity PUBLIC "IS_MSVC_CXX_COMPILER")
+endif()

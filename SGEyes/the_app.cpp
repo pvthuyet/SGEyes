@@ -61,7 +61,7 @@ std::string say_hello()
 
 void the_app::start()
 {
-	//fmt::print(say_hello());
+	//auto msg = say_hello();
 	directory_watcher_mgr mgr{};
 	mgr.start(NOTIFY_CHANGE_FLAG);
 	std::this_thread::sleep_for(std::chrono::seconds(10));
