@@ -1,6 +1,8 @@
 #include "directory_watcher_mgr.hpp"
-#include "watcher/directory_watcher_mgr_impl.hpp"
 #include "logger_define.hpp"
+
+#ifdef IS_MSVC_CXX_COMPILER
+#include "watcher/directory_watcher_mgr_impl.hpp"
 
 SAIGON_NAMESPACE_BEGIN
 
@@ -24,3 +26,20 @@ void directory_watcher_mgr::start(unsigned long notifyChange, bool subtree, unsi
 }
 
 SAIGON_NAMESPACE_END
+#else
+
+SAIGON_NAMESPACE_BEGIN
+directory_watcher_mgr::~directory_watcher_mgr()
+{
+	LOGENTER;
+	LOGEXIT;
+}
+
+void directory_watcher_mgr::start(unsigned long notifyChange, bool subtree, unsigned long interval)
+{
+	LOGENTER;
+	LOGEXIT;
+}
+SAIGON_NAMESPACE_END
+
+#endif //IS_MSVC_CXX_COMPILER

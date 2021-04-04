@@ -3,11 +3,16 @@
 #
 cmake_minimum_required (VERSION 3.8 FATAL_ERROR)
 
+project(SGEye LANGUAGES CXX)
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+
 add_executable(SGEyes 
 	"main.cpp" 
 	"the_app.cpp" 
 	"the_app.hpp" 
-	"file_activity/directory_watcher_mgr.cpp"
 	"logger/logger.hpp"
 	"logger/logger.cpp"
 	)
@@ -18,9 +23,11 @@ add_executable(SGEyes
 if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
   target_compile_definitions(SGEyes PUBLIC "IS_LINUX")
 endif()
+
 if(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
   target_compile_definitions(SGEyes PUBLIC "IS_MACOS")
 endif()
+
 if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
   target_compile_definitions(SGEyes PUBLIC "IS_WINDOWS")
 endif()

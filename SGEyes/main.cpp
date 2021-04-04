@@ -7,7 +7,7 @@
 #include "logger_define.hpp"
 #include <exception>
 
-int wmain(int argc, wchar_t* argv[])
+int main(int argc, char* argv[])
 {
     namespace sg = saigon;
     try {
@@ -23,5 +23,6 @@ int wmain(int argc, wchar_t* argv[])
         SPDLOG_ERROR(ex.what());
         return EXIT_FAILURE;
     }
+    
     return EXIT_SUCCESS;
 }
