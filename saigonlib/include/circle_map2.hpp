@@ -28,7 +28,7 @@ private:
 	mutable std::shared_mutex mMutex;
 
 public:
-	circle_map2(size_type capacity) :
+	circle_map2(size_type capacity = 0u) :
 		mBuffer(capacity)
 	{
 	}
@@ -37,6 +37,12 @@ public:
 	{
 		std::shared_lock slock(mMutex);
 		return mBuffer.capacity();
+	}
+
+	void set_capacity(size_type newCap)
+	{
+		std::lock_guard lock(mMutex);
+		mBuffer.set_capacity(newCap);
 	}
 
 	auto size() const
@@ -63,40 +69,57 @@ public:
 		}
 	}
 
-	opt_pair get_and_pop_front()
-	{
-		std::lock_guard lock(mMutex);
-		if (!mBuffer.empty()) {
-			pair item = mBuffer.front();
-			mBuffer.pop_front();
-			return std::make_optional(std::move(item));
-		}
-		return std::nullopt;
-	}
-
 	bool contains(key_type const& k, bool reverseFind = false) const
 	{
 		std::shared_lock slock(mMutex);
 		return reverseFind ? rfind_internal(k) != mBuffer.cend() : find_internal(k) != mBuffer.cend();
 	}
 
+	opt_pair front() const
+	{
+		std::shared_lock slock(mMutex);
+		if (mBuffer.empty()) {
+			return std::nullopt;
+		}
+
+		pair item = mBuffer.front();
+		return std::make_optional(std::move(item));
+	}
+
+	opt_pair at(size_type pos) const
+	{
+		std::shared_lock slock(mMutex);
+		if (mBuffer.empty()) {
+			return std::nullopt;
+		}
+
+		pair item = mBuffer.at(pos);
+		return std::make_optional(std::move(item));
+	}
+
 	auto erase(key_type const& k)
 	{
 		std::lock_guard lock(mMutex);
-		if (!mBuffer.empty()) {
-			return mBuffer.erase(find_internal(k));
+		// empty
+		if (mBuffer.empty()) {
+			return mBuffer.end();
 		}
-		return mBuffer.end();
+		auto it = find_internal(k);
+		// not found item
+		if (mBuffer.end() == it) {
+			return mBuffer.end();
+		}
+		return mBuffer.erase(it);
 	}
 
 	opt_mapped_type find(key_type const& k) const
 	{
 		std::shared_lock slock(mMutex);
 		auto it = find_internal(k);
-		if (mBuffer.cend() != it) {
-			return std::make_optional(it->second);
+		if (mBuffer.cend() == it) {
+			return std::nullopt;
 		}
-		return std::nullopt;
+		return std::make_optional(it->second);
 	}
 
 	template<class Predicate>
@@ -104,10 +127,10 @@ public:
 	{
 		std::shared_lock slock(mMutex);
 		auto it = std::ranges::find_if(mBuffer, pre);
-		if (mBuffer.cend() != it) {
-			return std::make_optional(it->second);
+		if (mBuffer.cend() == it) {
+			return std::nullopt;
 		}
-		return std::nullopt;
+		return std::make_optional(it->second);
 	}
 
 	template<class Predicate>
@@ -115,10 +138,10 @@ public:
 	{
 		std::shared_lock slock(mMutex);
 		auto it = boost::algorithm::find_if_backward(mBuffer, pre);
-		if (mBuffer.cend() != it) {
-			return std::make_optional(it->second);
+		if (mBuffer.cend() == it) {
+			return std::nullopt;
 		}
-		return std::nullopt;
+		return std::make_optional(it->second);
 	}
 
 	template<class Function>

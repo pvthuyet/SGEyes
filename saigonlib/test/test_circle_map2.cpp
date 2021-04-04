@@ -35,25 +35,51 @@ TEST(circle_map, push_back_duplicate)
 	test_map cm(2);
 	cm.push_back("a", 1);
 	cm.push_back("a", 2);
-	auto item = cm.get_and_pop_front();
+	auto item = cm.front();
 	ASSERT_EQ(item->second, 2);
 }
 
-TEST(circle_map, pop_front_normal)
+TEST(circle_map, front_normal)
 {
 	test_map cm(2);
 	cm.push_back("a", 1);
 	cm.push_back("2", 2);
-	auto item = cm.get_and_pop_front();
+	auto item = cm.front();
 	ASSERT_EQ(item->first, "a");
 	ASSERT_EQ(item->second, 1);
-	ASSERT_EQ(1, cm.size());
+	ASSERT_EQ(2, cm.size());
 }
 
-TEST(circle_map, pop_front_empty_map)
+TEST(circle_map, front_empty_map)
 {
 	test_map cm(2);
-	auto item = cm.get_and_pop_front();
+	auto item = cm.front();
+	ASSERT_TRUE(!item);
+}
+
+TEST(circle_map, at_normal)
+{
+	test_map cm(2);
+	cm.push_back("a", 1);
+	cm.push_back("2", 2);
+	auto item = cm.at(0);
+	ASSERT_EQ(item->first, "a");
+	ASSERT_EQ(item->second, 1);
+}
+
+TEST(circle_map, at_empty_map)
+{
+	test_map cm(2);
+	auto item = cm.at(0);
+	ASSERT_TRUE(!item);
+}
+
+TEST(circle_map, at_out_of_range)
+{
+	test_map cm(2);
+	cm.push_back("a", 1);
+	cm.push_back("2", 2);
+	auto item = cm.at(2);
 	ASSERT_TRUE(!item);
 }
 
@@ -99,10 +125,19 @@ TEST(circle_map, erase)
 	test_map cm(2);
 	cm.push_back("a", 1);
 	cm.push_back("b", 2);
-	cm.push_back("c", 3);
+	cm.erase("b");
+	ASSERT_FALSE(cm.contains("b"));
+	ASSERT_EQ(cm.size(), 1);
+}
+
+TEST(circle_map, erase_not_exist_item)
+{
+	test_map cm(2);
+	cm.push_back("a", 1);
+	cm.push_back("b", 2);
 	cm.erase("c");
 	ASSERT_FALSE(cm.contains("c"));
-	ASSERT_EQ(cm.size(), 1);
+	ASSERT_EQ(cm.size(), 2);
 }
 
 TEST(circle_map, find)

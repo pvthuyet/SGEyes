@@ -3,6 +3,7 @@
 #include "define.hpp"
 #include "std_filesystem.hpp"
 #include <chrono>
+#include <string>
 
 SAIGON_NAMESPACE_BEGIN
 class file_notify_info

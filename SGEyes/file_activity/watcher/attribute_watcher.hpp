@@ -1,18 +1,19 @@
 #pragma once
 
 #include "directory_watcher_base.hpp"
-#include "model_file_info.hpp"
+#include "model_file_info2.hpp"
 
 SAIGON_NAMESPACE_BEGIN
 class attribute_watcher : public directory_watcher_base
 {
 public:
-	model_file_info& get_model();
+	void set_capacity(unsigned int capacity);
+	model_file_info2& get_model();
 
 private:
 	void do_notify(file_notify_info info) final;
 
 private:
-	model_file_info mModel;
+	model_file_info2 mModel;
 };
 SAIGON_NAMESPACE_END

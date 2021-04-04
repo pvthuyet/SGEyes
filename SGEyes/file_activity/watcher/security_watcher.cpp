@@ -2,6 +2,11 @@
 #include "logger_define.hpp"
 
 SAIGON_NAMESPACE_BEGIN
+void security_watcher::set_capacity(unsigned int capacity)
+{
+	mModel.set_capacity(capacity);
+}
+
 void security_watcher::do_notify(file_notify_info info)
 {
 	switch (info.get_action())
@@ -17,7 +22,7 @@ void security_watcher::do_notify(file_notify_info info)
 	}
 }
 
-model_file_info& security_watcher::get_model()
+model_file_info2& security_watcher::get_model()
 {
 	return mModel;
 }

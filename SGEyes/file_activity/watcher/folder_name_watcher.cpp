@@ -2,6 +2,13 @@
 #include "logger_define.hpp"
 
 SAIGON_NAMESPACE_BEGIN
+
+void folder_name_watcher::set_capacity(unsigned int capacity)
+{
+	mAdd.set_capacity(capacity);
+	mRemove.set_capacity(capacity);
+}
+
 void folder_name_watcher::do_notify(file_notify_info info)
 {
 	SPDLOG_DEBUG(L"{} - {}", info.get_action(), info.get_path_wstring());
@@ -20,12 +27,12 @@ void folder_name_watcher::do_notify(file_notify_info info)
 	}
 }
 
-model_file_info& folder_name_watcher::get_add()
+model_file_info2& folder_name_watcher::get_add()
 {
 	return mAdd;
 }
 
-model_file_info& folder_name_watcher::get_remove()
+model_file_info2& folder_name_watcher::get_remove()
 {
 	return mRemove;
 }

@@ -3,6 +3,13 @@
 
 SAIGON_NAMESPACE_BEGIN
 
+void file_name_watcher::set_capacity(unsigned int capacity)
+{
+	mAdd.set_capacity(capacity);
+	mRemove.set_capacity(capacity);
+	mModify.set_capacity(capacity);
+}
+
 void file_name_watcher::do_notify(file_notify_info info)
 {
 	if (info.is_directory()) {
@@ -40,17 +47,17 @@ model_rename& file_name_watcher::get_rename()
 	return mRename;
 }
 
-model_file_info& file_name_watcher::get_add()
+model_file_info2& file_name_watcher::get_add()
 {
 	return mAdd;
 }
 
-model_file_info& file_name_watcher::get_remove()
+model_file_info2& file_name_watcher::get_remove()
 {
 	return mRemove;
 }
 
-model_file_info& file_name_watcher::get_modify()
+model_file_info2& file_name_watcher::get_modify()
 {
 	return mModify;
 }

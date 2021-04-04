@@ -147,7 +147,7 @@ void directory_watcher_mgr_impl::erase_rename(watching_group& group, rename_noti
 void directory_watcher_mgr_impl::checking_attribute(watching_group& group)
 {
 	auto& model = group.mAttr.get_model();
-	auto const& info = model.front();
+	auto info = model.front();
 
 	//1. Invlid item => should jump to next one for next step
 	if (!info) {
