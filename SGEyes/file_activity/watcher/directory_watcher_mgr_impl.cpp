@@ -39,12 +39,13 @@ void directory_watcher_mgr_impl::start(unsigned long notifyChange, bool subtree,
 	mWatchers.clear();
 	mWatchers.reserve(size);
 
+	constexpr unsigned int MAX_CAPACITY = 100u;
 	for (auto const& el : drives) {
 		auto group = std::make_unique<watching_group>();
-		group->mFileName.set_capacity(8u);
-		group->mAttr.set_capacity(8u);
-		group->mSecu.set_capacity(8u);
-		group->mFolderName.set_capacity(8u);
+		group->mFileName.set_capacity(MAX_CAPACITY);
+		group->mAttr.set_capacity(MAX_CAPACITY);
+		group->mSecu.set_capacity(MAX_CAPACITY);
+		group->mFolderName.set_capacity(MAX_CAPACITY);
 
 		// 1. watching file name
 		watching_setting setFileName(actionFileName, el, subtree);

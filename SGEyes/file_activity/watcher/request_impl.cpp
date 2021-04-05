@@ -126,7 +126,7 @@ void request_impl::process_notification()
 			get_observer()->get_watcher()->notify(file_notify_info{ wsFileName, fni.Action });
 		}
 		catch (std::exception const& ex) {
-			SPDLOG_ERROR(ex.what());
+			SPDLOG_WARN(ex.what());
 		}
 
 		if (!fni.NextEntryOffset) {
