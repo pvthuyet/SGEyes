@@ -1,5 +1,8 @@
 cmake_minimum_required (VERSION 3.8 FATAL_ERROR)
 
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
 if(CMAKE_CXX_COMPILER_ID MATCHES MSVC)
 	add_library(file_activity STATIC
 		watcher/attribute_watcher.hpp
@@ -15,12 +18,16 @@ if(CMAKE_CXX_COMPILER_ID MATCHES MSVC)
 		watcher/idirectory_watcher.hpp
 		watcher/iobserver.hpp
 		watcher/irequest.hpp
-		watcher/model_file_info.hpp
-		watcher/model_file_info.cpp
+		#watcher/model_file_info.hpp
+		#watcher/model_file_info.cpp
+		watcher/model_file_info2.hpp
+		watcher/model_file_info2.cpp
 		watcher/folder_name_watcher.hpp
 		watcher/folder_name_watcher.cpp
-		watcher/model_rename.hpp
-		watcher/model_rename.cpp
+		#watcher/model_rename.hpp
+		#watcher/model_rename.cpp
+		watcher/model_rename2.hpp
+		watcher/model_rename2.cpp
 		watcher/notify_to_server.hpp
 		watcher/notify_to_server.cpp
 		watcher/observer_impl.hpp

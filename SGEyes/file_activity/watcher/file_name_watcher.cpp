@@ -8,6 +8,7 @@ void file_name_watcher::set_capacity(unsigned int capacity)
 	mAdd.set_capacity(capacity);
 	mRemove.set_capacity(capacity);
 	mModify.set_capacity(capacity);
+	mRename.set_capacity(capacity);
 }
 
 void file_name_watcher::do_notify(file_notify_info info)
@@ -42,7 +43,7 @@ void file_name_watcher::do_notify(file_notify_info info)
 	}
 }
 
-model_rename& file_name_watcher::get_rename()
+model_rename2& file_name_watcher::get_rename()
 {
 	return mRename;
 }

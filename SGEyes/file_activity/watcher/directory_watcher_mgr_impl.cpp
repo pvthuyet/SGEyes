@@ -41,6 +41,10 @@ void directory_watcher_mgr_impl::start(unsigned long notifyChange, bool subtree,
 
 	for (auto const& el : drives) {
 		auto group = std::make_unique<watching_group>();
+		group->mFileName.set_capacity(8u);
+		group->mAttr.set_capacity(8u);
+		group->mSecu.set_capacity(8u);
+		group->mFolderName.set_capacity(8u);
 
 		// 1. watching file name
 		watching_setting setFileName(actionFileName, el, subtree);
@@ -120,7 +124,7 @@ void directory_watcher_mgr_impl::erase_all(watching_group& group, std::wstring c
 	group.mFileName.get_modify().erase(key);
 }
 
-void directory_watcher_mgr_impl::erase_rename(watching_group& group, rename_notify_info const& info)
+void directory_watcher_mgr_impl::erase_rename(watching_group& group, rename_notify_info2 const& info)
 {
 	SPDLOG_INFO(info.get_key());
 	auto oldName = info.mOldName.get_path_wstring();
@@ -196,7 +200,7 @@ void directory_watcher_mgr_impl::checking_attribute(watching_group& group)
 void directory_watcher_mgr_impl::checking_security(watching_group& group)
 {
 	auto& model = group.mSecu.get_model();
-	auto const& info = model.front();
+	auto info = model.front();
 
 	//1. Invlid item => should jump to next one for next step
 	if (!info) {
@@ -245,7 +249,7 @@ void directory_watcher_mgr_impl::checking_security(watching_group& group)
 void directory_watcher_mgr_impl::checking_folder_remove(watching_group& group)
 {
 	auto& model = group.mFolderName.get_remove();
-	auto const& info = model.front();
+	auto info = model.front();
 
 	//1. Invlid item => should jump to next one for next step
 	if (!info) {
@@ -266,8 +270,8 @@ void directory_watcher_mgr_impl::checking_folder_remove(watching_group& group)
 	// reveive: add, delete, modify (different disk)
 	for (auto& w : mWatchers) {
 		auto const& found = w->mFolderName.get_add().find_if([&info](auto const& item) {
-			return info.get_file_name_wstring() == item.get_file_name_wstring()
-				&& info.get_parent_path_wstring() != item.get_parent_path_wstring();
+			return info.get_file_name_wstring() == item.second.get_file_name_wstring()
+				&& info.get_parent_path_wstring() != item.second.get_parent_path_wstring();
 			});
 
 		// this is move action will process in folder move
@@ -289,7 +293,7 @@ void directory_watcher_mgr_impl::checking_folder_move(watching_group& group)
 	auto& model = group.mFolderName.get_add();
 
 	// pop item
-	auto const& info = model.front();
+	auto info = model.front();
 
 	//1. Invlid item => should jump to next one for next step
 	if (!info) {
@@ -310,8 +314,8 @@ void directory_watcher_mgr_impl::checking_folder_move(watching_group& group)
 	// Should exist filename in other path
 	for (auto& w : mWatchers) {
 		auto const& found = w->mFolderName.get_remove().find_if([&info](auto const& item) {
-			return info.get_file_name_wstring() == item.get_file_name_wstring()
-				&& info.get_parent_path_wstring() != item.get_parent_path_wstring();
+			return info.get_file_name_wstring() == item.second.get_file_name_wstring()
+				&& info.get_parent_path_wstring() != item.second.get_parent_path_wstring();
 			});
 
 		// The parent path must differnt
@@ -333,7 +337,7 @@ void directory_watcher_mgr_impl::checking_folder_move(watching_group& group)
 void directory_watcher_mgr_impl::checking_rename(watching_group& group)
 {
 	auto& model = group.mFileName.get_rename();
-	auto const& info = model.front();
+	auto info = model.front();
 
 	// 1. Invlid item => should jump to next one for next step
 	if (!info) {
@@ -382,8 +386,8 @@ void directory_watcher_mgr_impl::checking_rename(watching_group& group)
 	auto numRename = family.size();
 
 	if (numRename >= 2) {
-		rename_notify_info const& before = family[0].get();
-		rename_notify_info const& after = family[1].get();
+		rename_notify_info2 const& before = family[0].get();
+		rename_notify_info2 const& after = family[1].get();
 
 		// 2.1 Should wait for stable file on second rename
 		auto finalName = after.mNewName.get_path_wstring();
@@ -455,7 +459,7 @@ void directory_watcher_mgr_impl::checking_create(watching_group& group)
 	auto& model = group.mFileName.get_add();
 
 	// pop item
-	auto const& info = model.front();
+	auto info = model.front();
 
 	//1. Invlid item => should jump to next one for next step
 	if (!info) {
@@ -515,7 +519,7 @@ void directory_watcher_mgr_impl::checking_create(watching_group& group)
 void directory_watcher_mgr_impl::checking_remove(watching_group& group)
 {
 	auto& model = group.mFileName.get_remove();
-	auto const& info = model.front();
+	auto info = model.front();
 
 	//1. Invlid item => should jump to next one for next step
 	if (!info) {
@@ -561,8 +565,8 @@ void directory_watcher_mgr_impl::checking_remove(watching_group& group)
 	// reveive: add, delete, modify (different disk)
 	for (auto& w : mWatchers) {
 		auto const& found = w->mFileName.get_add().find_if([&info](auto const& item) {
-			return info.get_file_name_wstring() == item.get_file_name_wstring()
-				&& info.get_parent_path_wstring() != item.get_parent_path_wstring();
+			return info.get_file_name_wstring() == item.second.get_file_name_wstring()
+				&& info.get_parent_path_wstring() != item.second.get_parent_path_wstring();
 			});
 
 		// this is not remove action
@@ -582,7 +586,7 @@ void directory_watcher_mgr_impl::checking_modify(watching_group& group)
 {
 	// get model
 	auto& model = group.mFileName.get_modify();
-	auto const& info = model.front();
+	auto info = model.front();
 
 	//1. Invlid item => should jump to next one for next step
 	if (!info) {
@@ -639,7 +643,7 @@ void directory_watcher_mgr_impl::checking_modify_without_modify_event(watching_g
 	auto& model = group.mFileName.get_add();
 
 	// pop item
-	auto const& info = model.front();
+	auto info = model.front();
 
 	//1. Invlid item => should jump to next one for next step
 	if (!info) {
@@ -723,7 +727,7 @@ void directory_watcher_mgr_impl::checking_copy(watching_group& group)
 	auto& model = group.mFileName.get_add();
 
 	// pop item
-	auto const& info = model.front();
+	auto info = model.front();
 
 	//1. Invlid item => should jump to next one for next step
 	if (!info) {
@@ -795,8 +799,8 @@ void directory_watcher_mgr_impl::checking_copy(watching_group& group)
 	// Not action copy => maybe move
 	for (auto& w : mWatchers) {
 		auto const& found = w->mFileName.get_remove().find_if([&info](auto const& item) {
-			return info.get_file_name_wstring() == item.get_file_name_wstring()
-				&& info.get_parent_path_wstring() != item.get_parent_path_wstring();
+			return info.get_file_name_wstring() == item.second.get_file_name_wstring()
+				&& info.get_parent_path_wstring() != item.second.get_parent_path_wstring();
 			});
 
 		// this is not copy
@@ -819,7 +823,7 @@ void directory_watcher_mgr_impl::checking_move(watching_group& group)
 	auto& model = group.mFileName.get_add();
 
 	// pop item
-	auto const& info = model.front();
+	auto info = model.front();
 
 	//1. Invlid item => should jump to next one for next step
 	if (!info) {
@@ -885,8 +889,8 @@ void directory_watcher_mgr_impl::checking_move(watching_group& group)
 	// Should exist filename in other path
 	for (auto& w : mWatchers) {
 		auto const& found = w->mFileName.get_remove().find_if([&info](auto const& item) {
-			return info.get_file_name_wstring() == item.get_file_name_wstring()
-				&& info.get_parent_path_wstring() != item.get_parent_path_wstring();
+			return info.get_file_name_wstring() == item.second.get_file_name_wstring()
+				&& info.get_parent_path_wstring() != item.second.get_parent_path_wstring();
 			});
 
 		// The parent path must differnt
@@ -901,7 +905,7 @@ void directory_watcher_mgr_impl::checking_move(watching_group& group)
 	}
 }
 
-bool directory_watcher_mgr_impl::is_rename_only(rename_notify_info const& info, watching_group& group)
+bool directory_watcher_mgr_impl::is_rename_only(rename_notify_info2 const& info, watching_group& group)
 {
 	// oldName and newName should not exist in add
 	auto oldName = info.mOldName.get_path_wstring();
@@ -924,7 +928,7 @@ bool directory_watcher_mgr_impl::is_rename_only(rename_notify_info const& info, 
 	return true;
 }
 
-bool directory_watcher_mgr_impl::is_rename_one_time(rename_notify_info const& info, watching_group& group)
+bool directory_watcher_mgr_impl::is_rename_one_time(rename_notify_info2 const& info, watching_group& group)
 {
 	// method
 	// step 1: oldName must exist in add
@@ -952,8 +956,8 @@ bool directory_watcher_mgr_impl::is_rename_one_time(rename_notify_info const& in
 
 bool directory_watcher_mgr_impl::is_rename_download_auto_save(
 	watching_group& group,
-	rename_notify_info const& before,
-	rename_notify_info const& after)
+	rename_notify_info2 const& before,
+	rename_notify_info2 const& after)
 {
 	// **behaviour
 	//step 1: create - D:\test\9be830ee-221a-4a6e-a369-c53ac5a76098.tmp
@@ -982,8 +986,8 @@ bool directory_watcher_mgr_impl::is_rename_download_auto_save(
 
 bool directory_watcher_mgr_impl::is_rename_word(
 	watching_group& group,
-	rename_notify_info const& before,
-	rename_notify_info const& after)
+	rename_notify_info2 const& before,
+	rename_notify_info2 const& after)
 {
 	//step 1: create - D:\test\8.docx
 	//step 2: remove - D:\test\8.docx
@@ -1094,8 +1098,8 @@ bool directory_watcher_mgr_impl::is_create_only(file_notify_info const& info, wa
 	// reveive: add, delete, modify (different disk)
 	for (auto& w : mWatchers) {
 		auto const& found = w->mFileName.get_remove().find_if([&info](auto const& item) {
-			return info.get_file_name_wstring() == item.get_file_name_wstring()
-				&& info.get_parent_path_wstring() != item.get_parent_path_wstring();
+			return info.get_file_name_wstring() == item.second.get_file_name_wstring()
+				&& info.get_parent_path_wstring() != item.second.get_parent_path_wstring();
 			});
 
 		// this is not creation, lets other function checking this item

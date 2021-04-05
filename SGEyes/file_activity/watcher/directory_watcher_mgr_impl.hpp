@@ -28,7 +28,7 @@ private:
 	void stop() noexcept;
 	task_timer::status on_timer() final;
 	void erase_all(watching_group& group, std::wstring const& key);
-	void erase_rename(watching_group& group, rename_notify_info const& info);
+	void erase_rename(watching_group& group, rename_notify_info2 const& info);
 
 	void checking_attribute(watching_group& group);
 	void checking_security(watching_group& group);
@@ -43,17 +43,17 @@ private:
 	void checking_move(watching_group& group);
 
 private:
-	bool is_rename_only(rename_notify_info const& info, watching_group& group);
-	bool is_rename_one_time(rename_notify_info const& info, watching_group& group);
+	bool is_rename_only(rename_notify_info2 const& info, watching_group& group);
+	bool is_rename_one_time(rename_notify_info2 const& info, watching_group& group);
 
 	bool is_rename_download_auto_save(
 		watching_group& group,
-		rename_notify_info const& before,
-		rename_notify_info const& after);
+		rename_notify_info2 const& before,
+		rename_notify_info2 const& after);
 	bool is_rename_word(
 		watching_group& group,
-		rename_notify_info const& before,
-		rename_notify_info const& after);
+		rename_notify_info2 const& before,
+		rename_notify_info2 const& after);
 
 	bool is_temporary_file(file_notify_info const& info, watching_group& group);
 	bool is_save_as_txt(file_notify_info const& info, watching_group& group);
