@@ -2,7 +2,7 @@
 #include "logger_define.hpp"
 
 SAIGON_NAMESPACE_BEGIN
-void attribute_watcher::set_capacity(unsigned int capacity)
+void attribute_watcher::set_capacity(size_t capacity)
 {
 	mModel.set_capacity(capacity);
 }

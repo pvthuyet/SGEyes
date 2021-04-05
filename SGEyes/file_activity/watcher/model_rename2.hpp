@@ -24,7 +24,7 @@ class model_rename2
 {
 	using rename_map = circle_map2<std::wstring, rename_notify_info2>;
 public:
-	void set_capacity(unsigned int capacity);
+	void set_capacity(size_t capacity);
 	void push(file_notify_info&& info);
 	rename_notify_info2 front() const;
 
@@ -33,7 +33,7 @@ public:
 	std::vector<std::reference_wrapper<const rename_notify_info2>> get_family(rename_notify_info2 const& info) const;
 
 	void erase(std::wstring const& key);
-	unsigned int next_available_item();
+	size_t next_available_item();
 
 private:
 	rename_notify_info2 get_current_item() const;
@@ -42,6 +42,6 @@ private:
 	rename_notify_info2 mInfo;
 	rename_map mData;
 	rename_notify_info2 mEmptyItem;
-	unsigned int mCurrentIndex{ 0 };
+	size_t mCurrentIndex{ 0 };
 };
 SAIGON_NAMESPACE_END

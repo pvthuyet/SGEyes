@@ -7,7 +7,7 @@ SAIGON_NAMESPACE_BEGIN
 class attribute_watcher : public directory_watcher_base
 {
 public:
-	void set_capacity(unsigned int capacity);
+	void set_capacity(size_t capacity);
 	model_file_info2& get_model();
 
 private:

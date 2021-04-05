@@ -3,7 +3,7 @@
 
 SAIGON_NAMESPACE_BEGIN
 
-void file_name_watcher::set_capacity(unsigned int capacity)
+void file_name_watcher::set_capacity(size_t capacity)
 {
 	mAdd.set_capacity(capacity);
 	mRemove.set_capacity(capacity);

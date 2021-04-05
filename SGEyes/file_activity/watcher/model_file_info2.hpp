@@ -9,7 +9,7 @@ class model_file_info2
 {
 	using file_info_map = circle_map2<std::wstring, file_notify_info>;
 public:
-	void set_capacity(unsigned int capacity);
+	void set_capacity(size_t capacity);
 	void push(file_notify_info&& info);
 	file_notify_info front() const;
 
@@ -26,7 +26,7 @@ public:
 	}
 
 	void erase(std::wstring const& key);
-	unsigned int next_available_item();
+	size_t next_available_item();
 
 private:
 	file_notify_info get_current_item() const;
@@ -34,6 +34,6 @@ private:
 private:
 	file_info_map mData;
 	file_notify_info mEmptyItem;
-	unsigned int mCurrentIndex{ 0 };
+	size_t mCurrentIndex{ 0 };
 };
 SAIGON_NAMESPACE_END

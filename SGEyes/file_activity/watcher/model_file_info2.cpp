@@ -2,7 +2,7 @@
 
 SAIGON_NAMESPACE_BEGIN
 
-void model_file_info2::set_capacity(unsigned int capacity)
+void model_file_info2::set_capacity(size_t capacity)
 {
 	mData.set_capacity(capacity);
 }
@@ -40,7 +40,7 @@ file_notify_info model_file_info2::get_current_item() const
 	return item->second;
 }
 
-unsigned int model_file_info2::next_available_item()
+size_t model_file_info2::next_available_item()
 {
 	auto sz = mData.size();
 	if (sz > 0) {

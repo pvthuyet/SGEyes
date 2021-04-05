@@ -16,7 +16,7 @@ public:
 	using key_type = Key;
 	using mapped_type = T;
 	using opt_mapped_type = std::optional<mapped_type>;
-	using size_type = unsigned int;
+	using size_type = size_t;
 	using reference = mapped_type&;
 	using const_reference = const mapped_type&;
 	using pair = std::pair<key_type, mapped_type>;

@@ -27,7 +27,7 @@ bool operator==(rename_notify_info2 const& lhs, rename_notify_info2 const& rhs)
 
 /************************************************************************************************/
 
-void model_rename2::set_capacity(unsigned int capacity)
+void model_rename2::set_capacity(size_t capacity)
 {
 	mData.set_capacity(capacity);
 }
@@ -102,7 +102,7 @@ void model_rename2::erase(std::wstring const& key)
 	mData.erase(key);
 }
 
-unsigned int model_rename2::next_available_item()
+size_t model_rename2::next_available_item()
 {
 	auto sz = mData.size();
 	if (sz > 0) {
