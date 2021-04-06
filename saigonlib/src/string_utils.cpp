@@ -1,7 +1,6 @@
 #include "string_utils.hpp"
 #include "../gsl/include/gsl/assert" // TODO : why ???
 #include <regex>
-#include <exception>
 
 SAIGON_NAMESPACE_BEGIN
 
@@ -36,18 +35,8 @@ namespace string_utils
 	{
 		Expects(!s.empty());
 		Expects(!patterm.empty());
-
-		bool ret = false;
-		try
-		{
-			std::wregex rex(patterm, icase ? (std::regex_constants::ECMAScript | std::regex_constants::icase) : std::regex_constants::ECMAScript);
-			ret = std::regex_search(s, rex);
-		}
-		catch (std::exception const& ex)
-		{
-			int xx = 0;
-		}
-		return ret;
+		std::wregex rex(patterm, icase ? (std::regex_constants::ECMAScript | std::regex_constants::icase) : std::regex_constants::ECMAScript);
+		return std::regex_search(s, rex);
 	}
 }
 

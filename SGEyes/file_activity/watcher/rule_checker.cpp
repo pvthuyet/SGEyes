@@ -1,7 +1,9 @@
 #include "rule_checker.hpp"
 #include "string_utils.hpp"
 #include <nlohmann/json.hpp>
+#include "logger_define.hpp"
 #include <fstream>
+#include <exception>
 
 SAIGON_NAMESPACE_BEGIN
 
@@ -32,19 +34,25 @@ void rule_checker::load()
 
 bool rule_checker::is_excluded_path(file_notify_info const& info)
 {
-	auto filePath = info.get_path_wstring();
-	// Check in excluded paths
-	for (auto const& el : mExcludedPaths) {
-		if (string_utils::contains(filePath, el, true)) {
-			return true;
+	try {
+		auto filePath = info.get_path_wstring();
+		// Check in excluded paths
+		for (auto const& el : mExcludedPaths) {
+			if (string_utils::contains(filePath, el, true)) {
+				return true;
+			}
+		}
+
+		// Check in rexgex excluded paths
+		for (auto const& el : mRexExcludedPaths) {
+			if (string_utils::rex_contains(filePath, el, true)) {
+				return true;
+			}
 		}
 	}
-
-	// Check in rexgex excluded paths
-	for (auto const& el : mRexExcludedPaths) {
-		if (string_utils::rex_contains(filePath, el, true)) {
-			return true;
-		}
+	catch (std::exception const& ex) {
+		SPDLOG_ERROR(ex.what());
+		return true;
 	}
 
 	return false;
