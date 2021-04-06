@@ -61,7 +61,6 @@ private:
 
 private:
 	std::vector<std::unique_ptr<watching_group>> mWatchers;
-	std::shared_ptr<UnnecessaryDirectory> mRule; //++ TODO
 	notify_to_server mSender;
 };
 

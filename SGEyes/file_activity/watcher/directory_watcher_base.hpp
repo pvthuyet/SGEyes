@@ -3,7 +3,7 @@
 #include "idirectory_watcher.hpp"
 #include "iobserver.hpp"
 #include "watching_setting.hpp"
-#include "unnecessary_directory.hpp" //++ TODO
+#include "rule_checker.hpp"
 #include <Windows.h>
 
 SAIGON_NAMESPACE_BEGIN
@@ -14,7 +14,7 @@ public:
 	directory_watcher_base() noexcept = default;
 	~directory_watcher_base() noexcept override;
 
-	void set_rule(std::shared_ptr<UnnecessaryDirectory>);
+	void set_rule(std::shared_ptr<rule_checker>);
 
 	bool add_setting(watching_setting&& sett);
 
@@ -34,7 +34,7 @@ private:
 	HANDLE mObserverThread{ nullptr };
 	unsigned mThreadId{};
 	std::unique_ptr<iobserver> mObserver{};
-	std::shared_ptr<UnnecessaryDirectory> mRule; //++ TODO
+	std::shared_ptr<rule_checker> mRuleChecker;
 };
 
 SAIGON_NAMESPACE_END

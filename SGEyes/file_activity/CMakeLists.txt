@@ -36,11 +36,13 @@ if(CMAKE_CXX_COMPILER_ID MATCHES MSVC)
 		watcher/unnecessary_directory.cpp
 		watcher/watching_setting.hpp
 		watcher/watching_setting.cpp
+		watcher/rule_checker.hpp
+		watcher/rule_checker.cpp
 		watcher/directory_watcher_mgr_impl.hpp
 		watcher/directory_watcher_mgr_impl.cpp
 		directory_watcher_mgr.hpp
 		directory_watcher_mgr.cpp
-	)
+		)
 else()
 	add_library(file_activity STATIC
 		directory_watcher_mgr.hpp

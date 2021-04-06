@@ -1,23 +1,15 @@
 #include "directory_watcher_mgr_impl.hpp"
 #include "watcher/common_utils.hpp"
 #include "watcher/watching_setting.hpp"
+#include "../config/configuration.hpp"
 #include "logger_define.hpp"
 
 SAIGON_NAMESPACE_BEGIN
 
 constexpr size_t DELAY_PROCESS = 3000; // milli-second
 directory_watcher_mgr_impl::directory_watcher_mgr_impl() :
-	task_timer(),
-	mRule{ std::make_shared<UnnecessaryDirectory>() }
+	task_timer()
 {
-	mRule->setAppDataDir(true);
-	mRule->addUserDefinePath(L"C:\\Windows\\");
-	mRule->addUserDefinePath(L"C:\\ProgramData\\");
-	mRule->addUserDefinePath(L"C:\\project\\");
-	mRule->addUserDefinePath(L"D:\\work\\");
-	mRule->addUserDefinePath(L"D:\\share\\");
-	mRule->addUserDefinePath(L"C:\\Program Files (x86)\\");
-	mRule->addUserDefinePath(L"C:\\Program Files\\");
 }
 
 directory_watcher_mgr_impl::~directory_watcher_mgr_impl() noexcept
@@ -27,6 +19,9 @@ directory_watcher_mgr_impl::~directory_watcher_mgr_impl() noexcept
 
 void directory_watcher_mgr_impl::start(unsigned long notifyChange, bool subtree, unsigned long interval)
 {
+	// Load rule
+	auto ruleChecker = configuration::load_file_activity_rules();
+
 	unsigned long actionFileName = notifyChange & (notifyChange ^ (FILE_NOTIFY_CHANGE_DIR_NAME | FILE_NOTIFY_CHANGE_ATTRIBUTES | FILE_NOTIFY_CHANGE_SECURITY));
 	unsigned long actionAttr = FILE_NOTIFY_CHANGE_ATTRIBUTES & notifyChange;
 	unsigned long actionSecu = FILE_NOTIFY_CHANGE_SECURITY & notifyChange;
@@ -50,22 +45,22 @@ void directory_watcher_mgr_impl::start(unsigned long notifyChange, bool subtree,
 		// 1. watching file name
 		watching_setting setFileName(actionFileName, el, subtree);
 		group->mFileName.add_setting(std::move(setFileName));
-		group->mFileName.set_rule(mRule);
+		group->mFileName.set_rule(ruleChecker);
 
 		// 2. watching attribute
 		watching_setting setAttr(actionAttr, el, subtree);
 		group->mAttr.add_setting(std::move(setAttr));
-		group->mAttr.set_rule(mRule);
+		group->mAttr.set_rule(ruleChecker);
 
 		// 3. watching security
 		watching_setting setSecu(actionSecu, el, subtree);
 		group->mSecu.add_setting(std::move(setSecu));
-		group->mSecu.set_rule(mRule);
+		group->mSecu.set_rule(ruleChecker);
 
 		// 4. watching folder name
 		watching_setting setFolderName(actionFolderName, el, subtree);
 		group->mFolderName.add_setting(std::move(setFolderName));
-		group->mFolderName.set_rule(mRule);
+		group->mFolderName.set_rule(ruleChecker);
 
 		mWatchers.push_back(std::move(group));
 	}

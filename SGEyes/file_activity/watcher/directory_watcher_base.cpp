@@ -12,17 +12,16 @@ directory_watcher_base::~directory_watcher_base() noexcept
 	stop();
 }
 
-void directory_watcher_base::set_rule(std::shared_ptr<UnnecessaryDirectory> rule)
+void directory_watcher_base::set_rule(std::shared_ptr<rule_checker> rule)
 {
-	mRule = rule;
+	mRuleChecker = rule;
 }
 
 directory_watcher_base::directory_watcher_base(directory_watcher_base&& other) noexcept :
 	mSettings{ std::exchange(other.mSettings, std::vector<watching_setting>{}) },
 	mObserverThread{ std::exchange(other.mObserverThread, nullptr) },
 	mThreadId{ std::exchange(other.mThreadId, 0) },
-	mObserver{ std::exchange(other.mObserver, nullptr) },
-	mRule{ std::exchange(other.mRule, nullptr) }
+	mObserver{ std::exchange(other.mObserver, nullptr) }
 {}
 
 directory_watcher_base& directory_watcher_base::operator=(directory_watcher_base&& other) noexcept
@@ -32,7 +31,6 @@ directory_watcher_base& directory_watcher_base::operator=(directory_watcher_base
 		mObserverThread = std::exchange(other.mObserverThread, nullptr);
 		mThreadId = std::exchange(other.mThreadId, 0);
 		mObserver = std::exchange(other.mObserver, nullptr);
-		mRule = std::exchange(other.mRule, nullptr);
 	}
 	return *this;
 }
@@ -141,8 +139,8 @@ void directory_watcher_base::stop() noexcept
 
 void directory_watcher_base::filter_notify(file_notify_info info)
 {
-	Ensures(mRule);
-	if (!mRule->contains(info)) {
+	Ensures(mRuleChecker);
+	if (!mRuleChecker->is_excluded_path(info)) {
 		do_notify(std::move(info));
 	}
 }
