@@ -1,0 +1,24 @@
+{
+  "exclude_paths": [
+    "C:\\Program Files (x86)\\",
+    "C:\\Program Files\\",
+    "C:\\Windows\\",
+    "C:\\ProgramData\\",
+    "C:\\Recovery\\",
+    ":\\$Recycle.Bin\\",
+    ":\\System Volume Information\\",
+    "C:\\hiberfil.sys",
+    "C:\\Config.Msi",
+    "C:\\hiberfil.sys",
+    "C:\\pagefile.sys",
+    "C:\\swapfile.sys",
+    "C:\\$WINRE_BACKUP_PARTITION.MARKER"
+  ],
+  "regex_excluded_paths": [
+    "C:\\\\Users\\\\.+\\\\AppData\\",
+    "\\\\\\.",
+    "\\\\\\~.+TMP$",
+    "\\\\\\~\\$.+",
+    "C:\\\\Users\\\\.+\\\\NTUSER\\.(DAT|INI)"
+  ]
+}

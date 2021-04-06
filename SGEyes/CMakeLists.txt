@@ -15,7 +15,7 @@ add_executable(SGEyes
 	"the_app.hpp" 
 	"logger/logger.hpp"
 	"logger/logger.cpp"
-	)
+	 "config/configuration.hpp")
 
 #set_property(TARGET SGEyes PROPERTY CXX_STANDARD 20)
 
