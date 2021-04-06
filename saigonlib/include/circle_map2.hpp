@@ -89,7 +89,7 @@ public:
 	opt_pair at(size_type pos) const
 	{
 		std::shared_lock slock(mMutex);
-		if (mBuffer.empty()) {
+		if (mBuffer.empty() or pos >= mBuffer.size()) {
 			return std::nullopt;
 		}
 
