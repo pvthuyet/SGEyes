@@ -32,6 +32,21 @@ void rule_checker::load()
 
 bool rule_checker::is_excluded_path(file_notify_info const& info)
 {
+	auto filePath = info.get_path_wstring();
+	// Check in excluded paths
+	for (auto const& el : mExcludedPaths) {
+		if (string_utils::contains(filePath, el, true)) {
+			return true;
+		}
+	}
+
+	// Check in rexgex excluded paths
+	for (auto const& el : mRexExcludedPaths) {
+		if (string_utils::rex_contains(filePath, el, true)) {
+			return true;
+		}
+	}
+
 	return false;
 }
 

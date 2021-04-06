@@ -29,7 +29,8 @@ add_subdirectory(fmt_7_1_3)
 set_property(TARGET saigonlib PROPERTY CXX_STANDARD 20)
 
 target_include_directories(saigonlib PRIVATE
-	${SG_FMT_INC_DIR}
+	${LOCAL_FMT_INC_DIR}
+	${LOCAL_GSL_INC_DIR}
 	${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 target_link_libraries(saigonlib PRIVATE fmt)

@@ -15,8 +15,7 @@
     "C:\\$WINRE_BACKUP_PARTITION.MARKER"
   ],
   "regex_excluded_paths": [
-    "C:\\\\Users\\\\.+\\\\AppData\\",
-    "\\\\\\.",
+    "C:\\\\Users\\\\.+\\\\AppData\\\\",
     "\\\\\\~.+TMP$",
     "\\\\\\~\\$.+",
     "C:\\\\Users\\\\.+\\\\NTUSER\\.(DAT|INI)"

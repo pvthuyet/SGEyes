@@ -63,3 +63,5 @@ target_include_directories(file_activity PRIVATE
 if(CMAKE_CXX_COMPILER_ID MATCHES MSVC)
 	target_compile_definitions(file_activity PUBLIC "IS_MSVC_CXX_COMPILER")
 endif()
+
+target_link_libraries(file_activity PRIVATE saigonlib)

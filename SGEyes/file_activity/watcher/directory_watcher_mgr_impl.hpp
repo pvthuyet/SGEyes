@@ -9,7 +9,7 @@
 
 SAIGON_NAMESPACE_BEGIN
 
-class directory_watcher_mgr_impl : public timer
+class directory_watcher_mgr_impl final : public timer
 {
 	struct watching_group
 	{

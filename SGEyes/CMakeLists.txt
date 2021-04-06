@@ -151,7 +151,7 @@ target_include_directories(SGEyes
 add_subdirectory (file_activity)
 
 # Link library
-target_link_libraries(SGEyes PRIVATE saigonlib)
+#target_link_libraries(SGEyes PRIVATE saigonlib)
 target_link_libraries(SGEyes PRIVATE file_activity)
 
 # copy config.json to outdir

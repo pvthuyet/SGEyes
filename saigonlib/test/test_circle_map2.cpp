@@ -1,4 +1,5 @@
 #include "circle_map2.hpp"
+#include "string_utils.hpp"
 #include <gtest/gtest.h>
 #include <cstdlib>
 #include <string>
@@ -13,6 +14,13 @@ int main(int argc, char* argv[])
 {
 	testing::InitGoogleTest(&argc, argv);
 	return RUN_ALL_TESTS();
+}
+
+TEST(string_utils, test)
+{
+	std::wstring s = L"abc";
+	std::wstring ss = L"a";
+	string_utils::contains(s, ss);
 }
 
 TEST(circle_map, constructor)
