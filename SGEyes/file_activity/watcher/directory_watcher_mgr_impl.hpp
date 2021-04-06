@@ -1,6 +1,6 @@
 #pragma once
 #include "define.hpp"
-#include "task_timer.hpp"
+#include "timer.hpp"
 #include "watcher/file_name_watcher.hpp"
 #include "watcher/attribute_watcher.hpp"
 #include "watcher/security_watcher.hpp"
@@ -9,7 +9,7 @@
 
 SAIGON_NAMESPACE_BEGIN
 
-class directory_watcher_mgr_impl : public task_timer
+class directory_watcher_mgr_impl : public timer
 {
 	struct watching_group
 	{
@@ -26,7 +26,7 @@ public:
 
 private:
 	void stop() noexcept;
-	task_timer::status on_timer() final;
+	timer::status on_timer() final;
 	void erase_all(watching_group& group, std::wstring const& key);
 	void erase_rename(watching_group& group, rename_notify_info2 const& info);
 

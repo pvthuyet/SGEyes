@@ -20,8 +20,8 @@ set(SG_BOOST_INC_DIR ${LOCAL_BOOST_INC_DIR} PARENT_SCOPE)
 set(SG_NLOHMANN_INC_DIR ${LOCAL_NLOHMANN_INC_DIR} PARENT_SCOPE)
 
 add_library(saigonlib STATIC
-	"include/task_timer.hpp"
-	"src/task_timer.cpp"
+	"include/timer.hpp"
+	"src/timer.cpp"
 	 "include/string_utils.hpp" "src/string_utils.cpp")
 
 add_subdirectory(fmt_7_1_3)

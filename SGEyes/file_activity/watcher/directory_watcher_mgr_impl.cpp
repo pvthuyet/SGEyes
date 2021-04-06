@@ -7,7 +7,7 @@ SAIGON_NAMESPACE_BEGIN
 
 constexpr size_t DELAY_PROCESS = 3000; // milli-second
 directory_watcher_mgr_impl::directory_watcher_mgr_impl() :
-	task_timer()
+	timer()
 {
 }
 
@@ -74,12 +74,12 @@ void directory_watcher_mgr_impl::start(unsigned long notifyChange, bool subtree,
 	}
 
 	// start timer thread
-	task_timer::start(interval);
+	timer::start(interval);
 }
 
 void directory_watcher_mgr_impl::stop() noexcept
 {
-	task_timer::stop();
+	timer::stop();
 	for (auto& el : mWatchers) {
 		el->mFileName.stop();
 		el->mAttr.stop();
@@ -88,7 +88,7 @@ void directory_watcher_mgr_impl::stop() noexcept
 	}
 }
 
-task_timer::status directory_watcher_mgr_impl::on_timer()
+timer::status directory_watcher_mgr_impl::on_timer()
 {
 	for (auto& el : mWatchers) {
 		watching_group& grp = *el.get();
@@ -104,7 +104,7 @@ task_timer::status directory_watcher_mgr_impl::on_timer()
 		checking_copy(grp);
 		checking_move(grp);
 	}
-	return task_timer::status::CONTINUE;
+	return timer::status::CONTINUE;
 }
 
 void directory_watcher_mgr_impl::erase_all(watching_group& group, std::wstring const& key)

@@ -5,7 +5,7 @@
 
 SAIGON_NAMESPACE_BEGIN
 
-class task_timer
+class timer
 {
 public:
 	enum class status
@@ -15,7 +15,7 @@ public:
 	};
 
 public:
-	virtual ~task_timer() noexcept {};
+	virtual ~timer() noexcept {};
 
 	void start(int interval) noexcept;
 	void stop() noexcept;

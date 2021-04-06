@@ -1,10 +1,10 @@
-#include "task_timer.hpp"
+#include "timer.hpp"
 #include <mutex>
 #include <condition_variable>
 
 SAIGON_NAMESPACE_BEGIN
 
-void task_timer::start(int interval) noexcept
+void timer::start(int interval) noexcept
 {
 	std::jthread tmp([interval, this](std::stop_token stoken) {
 		std::mutex mutex;
@@ -32,7 +32,7 @@ void task_timer::start(int interval) noexcept
 	mWorker.swap(tmp);
 }
 
-void task_timer::stop() noexcept
+void timer::stop() noexcept
 {
 	if (mWorker.joinable()) {
 		mWorker.request_stop();
