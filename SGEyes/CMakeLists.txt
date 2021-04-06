@@ -15,8 +15,6 @@ add_executable(SGEyes
 	 "the_app.hpp" 
 	 "logger/logger.hpp"
 	 "logger/logger.cpp"
-	 "config/configuration.hpp"
-	 "config/configuration.cpp"
 	 )
 
 #set_property(TARGET SGEyes PROPERTY CXX_STANDARD 20)
@@ -143,7 +141,6 @@ set(SG_LOGGER_INC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/logger)
 
 target_include_directories(SGEyes 
 	PRIVATE 
-		${SG_NLOHMANN_INC_DIR}
 		${SG_SPDLOG_INC_DIR}
 		${SG_LOGGER_INC_DIR}
 		${SG_SAIGONLIB_INC_DIR}
@@ -159,7 +156,7 @@ target_link_libraries(SGEyes PRIVATE file_activity)
 
 # copy config.json to outdir
 add_custom_command(TARGET SGEyes POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_SOURCE_DIR}/config/config.json" ${CMAKE_CURRENT_BINARY_DIR}
+    COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_SOURCE_DIR}/config.json" ${CMAKE_CURRENT_BINARY_DIR}
 )
 
 # TODO: Add tests and install targets if needed.

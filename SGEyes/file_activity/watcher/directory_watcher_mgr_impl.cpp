@@ -1,7 +1,6 @@
 #include "directory_watcher_mgr_impl.hpp"
 #include "watcher/common_utils.hpp"
 #include "watcher/watching_setting.hpp"
-#include "../config/configuration.hpp"
 #include "logger_define.hpp"
 
 SAIGON_NAMESPACE_BEGIN
@@ -20,7 +19,8 @@ directory_watcher_mgr_impl::~directory_watcher_mgr_impl() noexcept
 void directory_watcher_mgr_impl::start(unsigned long notifyChange, bool subtree, unsigned long interval)
 {
 	// Load rule
-	auto ruleChecker = configuration::load_file_activity_rules();
+	auto ruleChecker = std::make_shared<rule_checker>();
+	ruleChecker->load();
 
 	unsigned long actionFileName = notifyChange & (notifyChange ^ (FILE_NOTIFY_CHANGE_DIR_NAME | FILE_NOTIFY_CHANGE_ATTRIBUTES | FILE_NOTIFY_CHANGE_SECURITY));
 	unsigned long actionAttr = FILE_NOTIFY_CHANGE_ATTRIBUTES & notifyChange;
