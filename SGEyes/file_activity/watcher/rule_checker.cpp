@@ -16,8 +16,8 @@ void rule_checker::load()
 	auto const& jExPaths = js[EXCLUDED_PATHS];
 	for (auto const& el : jExPaths.items()) {
 		// TODO
-		std::string jstr = el.value();
-		mExcludedPaths.push_back(string_utils::convert(std::string_view(jstr)));
+		std::string_view jstr = el.value();
+		mExcludedPaths.push_back(string_utils::convert_to_wstring(jstr));
 	}
 
 	// 2. parse 'regex_excluded_paths'
@@ -25,8 +25,8 @@ void rule_checker::load()
 	auto const& jRexExPaths = js[REX_EXCLUDED_PATHS];
 	for (auto const& el : jRexExPaths.items()) {
 		// TODO
-		std::string jstr = el.value();
-		mRexExcludedPaths.push_back(string_utils::convert(std::string_view(jstr)));
+		std::string_view jstr = el.value();
+		mRexExcludedPaths.push_back(string_utils::convert_to_wstring(jstr));
 	}
 }
 

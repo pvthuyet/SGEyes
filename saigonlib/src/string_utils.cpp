@@ -4,12 +4,12 @@ SAIGON_NAMESPACE_BEGIN
 
 namespace string_utils
 {
-	std::string convert(std::wstring_view s)
+	std::string convert_to_string(std::wstring_view s)
 	{
 		return std::string(s.cbegin(), s.cend());
 	}
 
-	std::wstring convert(std::string_view s)
+	std::wstring convert_to_wstring(std::string_view s)
 	{
 		return std::wstring(s.cbegin(), s.cend());
 	}
