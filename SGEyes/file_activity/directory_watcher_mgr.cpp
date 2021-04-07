@@ -6,20 +6,14 @@
 
 SAIGON_NAMESPACE_BEGIN
 
-directory_watcher_mgr::~directory_watcher_mgr()
-{
-	LOGENTER;
-	if (mImpl) {
-		delete mImpl;
-	}
-	LOGEXIT;
-}
+directory_watcher_mgr::directory_watcher_mgr() = default;
+directory_watcher_mgr::~directory_watcher_mgr() = default;
 
 void directory_watcher_mgr::start(unsigned long notifyChange, bool subtree, unsigned long interval)
 {
 	LOGENTER;
 	if (!mImpl) {
-		mImpl = new directory_watcher_mgr_impl();
+		mImpl = std::make_unique<directory_watcher_mgr_impl>();
 		mImpl->start(notifyChange, subtree, interval);
 	}
 	LOGEXIT;
@@ -29,11 +23,10 @@ SAIGON_NAMESPACE_END
 #else
 
 SAIGON_NAMESPACE_BEGIN
-directory_watcher_mgr::~directory_watcher_mgr()
-{
-	LOGENTER;
-	LOGEXIT;
-}
+// TODO this is dummy
+class directory_watcher_mgr_impl {};
+directory_watcher_mgr::directory_watcher_mgr() = default;
+directory_watcher_mgr::~directory_watcher_mgr() = default;
 
 void directory_watcher_mgr::start(unsigned long notifyChange, bool subtree, unsigned long interval)
 {
