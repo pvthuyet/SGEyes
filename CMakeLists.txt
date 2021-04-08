@@ -3,7 +3,7 @@
 #
 cmake_minimum_required (VERSION 3.8 FATAL_ERROR)
 
-project(SGEye LANGUAGES CXX)
+project(SGEyes LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 

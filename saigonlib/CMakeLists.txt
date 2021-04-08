@@ -97,3 +97,19 @@ add_test(
   NAME google_test
   COMMAND $<TARGET_FILE:test_circle_map2>
   )
+
+################################################################
+## boost exmaple
+add_executable(message_queue1 
+	test/test_message_queue1.cpp
+	)
+target_include_directories(message_queue1 PRIVATE
+	${LOCAL_BOOST_INC_DIR}
+	)
+
+add_executable(message_queue2
+	test/test_message_queue2.cpp
+	)
+target_include_directories(message_queue2 PRIVATE
+	${LOCAL_BOOST_INC_DIR}
+	)

@@ -2,6 +2,7 @@
 #include "file_activity/directory_watcher_mgr.hpp"
 #include <string>
 #include <thread>
+#include <vector>
 
 #ifdef IS_WINDOWS
 #include <Windows.h>
