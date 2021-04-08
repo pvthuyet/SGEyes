@@ -17,7 +17,7 @@ int main(int argc, char* argv[])
         int* x = new int(1);
 
         // start app
-        sg::the_app::get_instance().start();
+        sg::the_app{}.start();
     }
     catch (std::exception const& ex) {
         SPDLOG_ERROR(ex.what());

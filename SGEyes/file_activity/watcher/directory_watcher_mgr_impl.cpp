@@ -86,6 +86,7 @@ void directory_watcher_mgr_impl::stop() noexcept
 		el->mSecu.stop();
 		el->mFolderName.stop();
 	}
+	mWatchers.clear();
 }
 
 timer::status directory_watcher_mgr_impl::on_timer()

@@ -18,12 +18,6 @@ constexpr unsigned long  NOTIFY_CHANGE_FLAG = 0;
 
 SAIGON_NAMESPACE_BEGIN
 
-the_app& the_app::get_instance()
-{
-	static the_app app;
-	return app;
-}
-
 std::string say_hello() 
 {
 	std::string msg;
@@ -62,9 +56,16 @@ std::string say_hello()
 void the_app::start()
 {
 	//auto msg = say_hello();
-	directory_watcher_mgr mgr{};
-	mgr.start(NOTIFY_CHANGE_FLAG);
-	std::this_thread::sleep_for(std::chrono::seconds(10));
+	//directory_watcher_mgr mgr{};
+	//mgr.start(NOTIFY_CHANGE_FLAG);
+	//std::this_thread::sleep_for(std::chrono::seconds(10));
+	std::jthread worker([](std::stop_token stoken) {
+		directory_watcher_mgr mgr{};
+		while (true) {
+			break;
+		}
+		});
+	worker.join();
 }
 
 SAIGON_NAMESPACE_END
